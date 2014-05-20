@@ -1,0 +1,49 @@
+#include<iostream>
+#include<algorithm>
+
+using namespace std;
+
+int main()
+{
+    ios::sync_with_stdio(false);
+    int T,k,l;
+    int n;
+    unsigned p,a,b,c;
+
+    cin>>T;
+    unsigned S[1005];
+
+    while(T--)
+    {
+    cin>>n;
+    for(int i=0;i<n;i++)
+        cin>>S[i];
+    cin>>p;
+    bool flag=false;
+    sort(S,S+n);
+
+    for(int i=0;i<=n-3;i++)
+        {
+            a=S[i];
+            k=i+1;
+            l=n-1;
+
+            while(k<l)
+                {
+                b=S[k];
+                c=S[l];
+                if(a+b+c==p)
+                    {flag=true;break;}
+                else if(a+b+c>p)
+                    l=l-1;
+                else
+                    k=k+1;
+                }
+        }
+    if(flag)
+        cout<<"YES"<<endl;
+    else
+        cout<<"NO"<<endl;
+    }
+    return 0;
+}
