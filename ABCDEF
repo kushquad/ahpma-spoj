@@ -1,0 +1,47 @@
+#include<iostream>
+#include<algorithm>
+#include<cstring>
+
+#define NOOFSOLUTIONS 1000000
+
+using namespace std;
+
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+
+    int N;
+    cin>>N;
+    int arr[N];
+    for(int i=0;i<N;i++)
+        cin>>arr[i];
+
+    int *candidateSolutions1 = (int*)malloc(sizeof(int)*NOOFSOLUTIONS);
+    int k=0;
+    for(int a=0;a<N;a++)
+        for(int b=0;b<N;b++)
+            for(int c=0;c<N;c++)
+                candidateSolutions1[k++] = arr[a]*arr[b] +arr[c];
+
+    sort(candidateSolutions1,candidateSolutions1+N*N*N);
+
+    int *candidateSolutions2 = (int*)malloc(sizeof(int)*NOOFSOLUTIONS);
+    k=0;
+    for(int d=0;d<N;d++)
+        for(int e=0;e<N;e++)
+            for(int f=0;f<N;f++)
+                if(arr[d]!=0)
+                    candidateSolutions2[k++] = arr[d]*(arr[e]+arr[f]);
+
+    int totalsize = N*N*N;
+    long long count = 0;
+    pair<int*,int*> a;
+    for(int i=0;i<k;i++)
+    {
+        a = equal_range(candidateSolutions1,candidateSolutions1+totalsize,candidateSolutions2[i]);
+        count += a.second-a.first;
+    }
+    cout<<count;
+    return 0;
+}
