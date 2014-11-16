@@ -1,0 +1,56 @@
+#include<bits/stdc++.h>
+
+#define SIZE 100000
+#define MAXDIST 1000000000
+using namespace std;
+
+bool predicate(int x[],int n,int c,int predvalue)
+{
+    int prevPos = x[0];
+    int countSoFar = 1;
+    for(int i=1;i<n;i++)
+    {
+        if(x[i]-prevPos>=predvalue)
+            {
+                countSoFar++;
+                prevPos = x[i];
+            }
+    }
+
+    if(countSoFar>=c)
+        return true;
+    else
+        return false;
+}
+
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+
+    int T;
+    cin>>T;
+    int n,c;
+    int x[SIZE+1];
+    while(T--)
+    {
+        cin>>n>>c;
+        for(int i=0;i<n;i++)
+            cin>>x[i];
+        sort(x,x+n);
+        int high = MAXDIST;
+        int low = 0;
+        int mid;
+        while(low<high)
+        {
+            mid = low+(high-low)/2;
+            cout<<low<<" "<<mid<<" "<<high<<"\n";
+            if(predicate(x,n,c,mid))
+                low = mid+1;
+            else
+                high = mid;
+        }
+        cout<<low-1<<"\n";
+    }
+    return 0;
+}
