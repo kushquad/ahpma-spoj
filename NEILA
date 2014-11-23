@@ -1,0 +1,41 @@
+#include<iostream>
+#include<cstdlib>
+
+#define SIZE 100000
+
+using namespace std;
+
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+
+    int T;
+    int N,P;
+    int *A = (int *)malloc(sizeof(int)*SIZE);
+
+    cin>>T;
+    while(T--)
+    {
+        int max_so_far=0;
+        int max_index_so_far=0;
+        int max_ending_here=0;
+        int max_index_ending_here=0;
+        int fp=0,sp=0;
+
+        cin>>N>>P;
+        for(int i=0;i<N;i++)
+            cin>>A[i];
+
+        for(fp=0;fp<N;fp++)
+        {
+            if(A[fp]+max_ending_here<P)
+                max_ending_here+=A[fp],max_index_ending_here++;
+            else if(A[fp]+max_ending_here==P)
+                cout<<P<<" "<<max_index_ending_here
+
+        }
+    }
+
+    return 0;
+}
