@@ -1,0 +1,73 @@
+#include<iostream>
+#include<algorithm>
+#include<cstdlib>
+
+using namespace std;
+
+//Diameter of tree refers to the maximum nodal distance possible between any two nodes in a given tree.
+struct TreeNode
+{
+    int value;
+    TreeNode *left;
+    TreeNode *right;
+};
+
+int height(TreeNode &root)
+{
+    if(&root==NULL)
+        return 0;
+    int lheight = height(*root.left);
+    int rheight = height(*root.right);
+
+    return max(lheight,rheight)+1;
+}
+
+int diameter(TreeNode &root)
+{
+    //Root passed as an ordinary object by reference, root is the object, &root is the memory address
+    //To check null reference, we need to use &
+    if(&root==NULL)
+        return 0;
+
+    //Since the functions expect us to provide pure object, * deferences the pointer to root.left which is of reference type
+    int lheight = height(*root.left);
+    int rheight = height(*root.right);
+
+    int ldiameter = diameter(*root.left);
+    int rdiameter = diameter(*root.right);
+
+    return max(lheight+rheight+1,max(ldiameter,rdiameter));
+}
+
+void initialise(TreeNode &root, int val)
+{
+    //Root is like an object passed by reference, we can access fields through . itself
+    root.value = val;
+    root.left = NULL;
+    root.right = NULL;
+}
+
+int main()
+{
+    ios::sync_with_stdio(false);
+
+    //Initializing merely as objects
+    TreeNode tree;
+    initialise(tree,0);
+    TreeNode node1,node2,node3,node4;
+    initialise(node1,1);
+    initialise(node2,2);
+    initialise(node3,3);
+    initialise(node4,4);
+
+    //Since tree.left expects an address the RHS must have & operator on a object
+    tree.left = &node1;
+    tree.right = &node2;
+    node1.left = &node3;
+    node3.right = &node4;
+
+    cout<<diameter(tree);
+    cout<<diameter(node1);
+
+    return 0;
+}
